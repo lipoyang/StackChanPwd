@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "m5-pantilt")(type "KiCad")(uri "${KIPRJMOD}/Bridge.pretty")(options "")(descr ""))
+)
