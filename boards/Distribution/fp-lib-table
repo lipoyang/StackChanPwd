@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "OKL_T6_W12N")(type "KiCad")(uri "${KIPRJMOD}/OKL_T6_W12N.pretty")(options "")(descr ""))
+)
