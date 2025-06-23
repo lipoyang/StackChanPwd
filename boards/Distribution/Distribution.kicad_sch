@@ -2279,7 +2279,8 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 57.15 106.68 180)
+		(at 57.15 104.14 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2287,7 +2288,7 @@
 		(dnp no)
 		(uuid "051f6654-8d95-4e6b-ab3d-6a1a3328512d")
 		(property "Reference" "CN2"
-			(at 54.61 106.6801 0)
+			(at 54.61 104.1399 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2296,7 +2297,7 @@
 			)
 		)
 		(property "Value" "Grove"
-			(at 54.61 104.1401 0)
+			(at 54.61 106.6799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2304,8 +2305,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical"
-			(at 57.15 106.68 0)
+		(property "Footprint" "Grove:GROVE-HW4-2.0"
+			(at 57.15 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2314,7 +2315,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 57.15 106.68 0)
+			(at 57.15 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2323,7 +2324,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 57.15 106.68 0)
+			(at 57.15 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2344,7 +2345,7 @@
 			(uuid "4d7e5177-88f7-45f5-8242-1c4a599d5f13")
 		)
 		(instances
-			(project ""
+			(project "Distribution"
 				(path "/37f78be0-f9e9-4811-b780-892627006884"
 					(reference "CN2")
 					(unit 1)
