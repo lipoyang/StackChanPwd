@@ -808,8 +808,8 @@
 					(justify left bottom)
 				)
 			)
-			(property "Footprint" "OKL_T6_W12N:OKL-T_X-WXXN"
-				(at 0 0 0)
+			(property "Footprint" "OKL-T_X-WXXN"
+				(at 0 9.398 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1161,6 +1161,30 @@
 					)
 					(fill
 						(type background)
+					)
+				)
+				(text "2"
+					(at -12.954 6.096 0)
+					(effects
+						(font
+							(size 1.524 1.524)
+						)
+					)
+				)
+				(text "3"
+					(at -1.524 -15.24 900)
+					(effects
+						(font
+							(size 1.524 1.524)
+						)
+					)
+				)
+				(text "4"
+					(at 15.24 6.096 0)
+					(effects
+						(font
+							(size 1.524 1.524)
+						)
 					)
 				)
 			)
@@ -3730,7 +3754,7 @@
 				)
 			)
 		)
-		(property "Value" "OKL-T/6-W12N"
+		(property "Value" "OKL-T/3-W12N"
 			(at 132.842 65.532 0)
 			(effects
 				(font
