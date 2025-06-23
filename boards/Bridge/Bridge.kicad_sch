@@ -3630,7 +3630,7 @@
 	)
 	(text "DNP"
 		(exclude_from_sim no)
-		(at 201.93 32.512 0)
+		(at 201.93 33.782 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4254,7 +4254,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 29.21) (xy 176.53 29.21)
+			(xy 191.77 30.48) (xy 176.53 30.48)
 		)
 		(stroke
 			(width 0)
@@ -4614,7 +4614,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 26.67) (xy 185.42 26.67)
+			(xy 191.77 27.94) (xy 185.42 27.94)
 		)
 		(stroke
 			(width 0)
@@ -4824,7 +4824,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 31.75) (xy 176.53 31.75)
+			(xy 191.77 33.02) (xy 176.53 33.02)
 		)
 		(stroke
 			(width 0)
@@ -4914,7 +4914,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 24.13) (xy 185.42 24.13)
+			(xy 191.77 25.4) (xy 185.42 25.4)
 		)
 		(stroke
 			(width 0)
@@ -5903,7 +5903,7 @@
 		(uuid "713e0777-58b2-4487-baca-60d0ebed27c3")
 	)
 	(label "RXD2"
-		(at 185.42 24.13 180)
+		(at 185.42 25.4 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6053,7 +6053,7 @@
 		(uuid "96db52e2-6336-4f5e-846e-528c594d0509")
 	)
 	(label "TXD2"
-		(at 185.42 26.67 180)
+		(at 185.42 27.94 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7950,7 +7950,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 176.53 31.75 0)
+		(at 176.53 33.02 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -7959,7 +7959,7 @@
 		(dnp no)
 		(uuid "1493c2ab-7e6e-4ece-b662-bc2c2ec8e959")
 		(property "Reference" "#PWR011"
-			(at 176.53 38.1 0)
+			(at 176.53 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7968,7 +7968,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 176.403 36.1442 0)
+			(at 176.403 37.4142 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7976,7 +7976,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 176.53 31.75 0)
+			(at 176.53 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7985,7 +7985,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 176.53 31.75 0)
+			(at 176.53 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7994,7 +7994,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 176.53 31.75 0)
+			(at 176.53 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8795,8 +8795,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 157.48 30.48 0)
-		(mirror x)
+		(at 157.48 27.94 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8813,7 +8812,7 @@
 			)
 		)
 		(property "Value" "Grove"
-			(at 160.02 27.9401 0)
+			(at 160.528 27.432 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8821,8 +8820,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical"
-			(at 157.48 30.48 0)
+		(property "Footprint" "Grove:GROVE-HW4-2.0"
+			(at 157.48 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8831,7 +8830,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 157.48 30.48 0)
+			(at 157.48 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8840,7 +8839,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 157.48 30.48 0)
+			(at 157.48 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10347,7 +10346,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 176.53 29.21 0)
+		(at 176.53 30.48 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -10356,7 +10355,7 @@
 		(dnp no)
 		(uuid "adc8ecac-8c3f-47c9-98c4-d10f28b79719")
 		(property "Reference" "#PWR06"
-			(at 176.53 33.02 0)
+			(at 176.53 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10365,7 +10364,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 176.149 24.8158 0)
+			(at 176.149 26.0858 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10373,7 +10372,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 176.53 29.21 0)
+			(at 176.53 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10382,7 +10381,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 176.53 29.21 0)
+			(at 176.53 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10391,7 +10390,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 176.53 29.21 0)
+			(at 176.53 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10477,8 +10476,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 196.85 29.21 0)
-		(mirror x)
+		(at 196.85 27.94 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -10486,7 +10484,7 @@
 		(dnp no)
 		(uuid "b39e07fa-0237-485b-a0aa-b4e968d0ae43")
 		(property "Reference" "CN8"
-			(at 199.898 23.114 0)
+			(at 199.898 24.13 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10495,7 +10493,7 @@
 			)
 		)
 		(property "Value" "Grove"
-			(at 199.39 26.6701 0)
+			(at 199.898 27.686 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10503,8 +10501,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical"
-			(at 196.85 29.21 0)
+		(property "Footprint" "Grove:GROVE-HW4-2.0"
+			(at 196.85 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10513,7 +10511,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 196.85 29.21 0)
+			(at 196.85 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10522,7 +10520,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 196.85 29.21 0)
+			(at 196.85 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
