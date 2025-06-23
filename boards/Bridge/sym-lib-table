@@ -1,4 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "pantilt")(type "Legacy")(uri "${KIPRJMOD}/pantilt.lib")(options "")(descr ""))
-)
