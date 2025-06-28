@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Stack-chan Powerd / Brigde Board")
-		(date "2025-06-20")
+		(date "2025-06-28")
 		(rev "1.0")
 	)
 	(lib_symbols
@@ -8427,8 +8427,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x04")
-		(at 269.24 109.22 0)
-		(mirror x)
+		(at 269.24 106.68 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8436,7 +8435,7 @@
 		(dnp no)
 		(uuid "27beaea2-ba91-41c0-8894-96e51f204917")
 		(property "Reference" "CN6"
-			(at 272.288 103.124 0)
+			(at 272.288 112.776 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8445,7 +8444,7 @@
 			)
 		)
 		(property "Value" "Grove"
-			(at 271.78 106.6801 0)
+			(at 271.78 109.2199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8453,8 +8452,8 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_B4B-PH-K_1x04_P2.00mm_Vertical"
-			(at 269.24 109.22 0)
+		(property "Footprint" "Grove:GROVE-HW4-2.0"
+			(at 269.24 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8463,7 +8462,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 269.24 109.22 0)
+			(at 269.24 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8472,7 +8471,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 269.24 109.22 0)
+			(at 269.24 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
