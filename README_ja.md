@@ -8,7 +8,7 @@
 [![代替テキスト](https://img.youtube.com/vi/nw4zOiLLuTk/0.jpg)](https://www.youtube.com/watch?v=nw4zOiLLuTk)
  -->
 ## システム構成
-![システム概要](./docs/images/overview.jpg)
+![システム構成](./docs/images/overview.jpg)
 
 ## 解説
 * 日本語記事 → https://protopedia.net/prototype/6781
