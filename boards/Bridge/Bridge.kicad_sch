@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Stack-chan Powerd / Brigde Board")
-		(date "2025-06-28")
+		(date "2025-07-20")
 		(rev "1.0")
 	)
 	(lib_symbols
@@ -7894,7 +7894,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "PinHeader"
+		(property "Value" "B3B-EH-A"
 			(at 271.78 31.7501 0)
 			(effects
 				(font
@@ -9373,7 +9373,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "PinHeader"
+		(property "Value" "B3B-EH-A"
 			(at 271.78 68.5801 0)
 			(effects
 				(font
