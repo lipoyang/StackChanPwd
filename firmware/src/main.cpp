@@ -5,9 +5,15 @@
 #include "./Motion.h"
 #include "./common.h"
 
+// シリアルポートのピン割り当て
+#define PIN_RXD1 27
+#define PIN_TXD1 19
+#define PIN_RXD2 13
+#define PIN_TXD2 14
+
 // ICSサーボ
-IcsController ics1(Serial1); // 右半身系統
-IcsController ics2(Serial2); // 左半身系統
+IcsController ics1(Serial1, PIN_RXD1, PIN_TXD1); // 右半身系統
+IcsController ics2(Serial2, PIN_RXD2, PIN_TXD2); // 左半身系統
 IcsServo servos[SERVO_NUM];
 
 // モーションコントローラ
@@ -58,7 +64,8 @@ void setup()
 	motionCtrl.setTrim(TRIM_POS);
 	motionCtrl.setHome(HOME_POS, HOME_STRETCH);
 	motionCtrl.begin(M000::motion);
-/*	
+
+#if 0	// デバッグ用 (サーボの位置を確認)
 	while(1){
 		for(int i=0;i<SERVO_NUM;i++){
 			uint16_t pos = servos[i].getPosition();
@@ -67,12 +74,13 @@ void setup()
 		Serial.println(" ");
 		delay(1000);
 	}
-*/	
+#endif
 	// TODO
 	// UDP通信の設定
 //	udpComm.begin();
 //	udpComm.onReceive = udpComm_callback;
 	
+#if 0
 	// シリアル通信で's'を受信するか
 	// ピン20がHIGHであれば動作開始
 	pinMode(20, INPUT_PULLUP);
@@ -86,6 +94,7 @@ void setup()
 			break;
 		}
 	}
+#endif
 	// ホームポジションに移動
 	motionCtrl.standHome();
 }

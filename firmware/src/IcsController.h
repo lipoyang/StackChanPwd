@@ -17,7 +17,7 @@ class IcsController
     
 public:
     // API
-    IcsController(HardwareSerial& serial);
+    IcsController(HardwareSerial& serial, int rxPin=-1, int txPin=-1); // constructor
     void begin(int baud=115200); // start ICS controller
     void loop();    // call this in main loop (for Asynchronous API)
     bool isReady(); // requested communication completed? (for Asynchronous API)
@@ -33,6 +33,8 @@ private:
     
 private:
     HardwareSerial *serial; // serial port
+    int rxPin;              // RX pin number
+    int txPin;              // TX pin number
     IcsServo *servoFirst;   // first attached servo (for communication scheduling)
     IcsServo *servoLast;    // last attached servo (for communication scheduling)
     IcsServo *servoNow;     // now communicating servo (for communication scheduling)

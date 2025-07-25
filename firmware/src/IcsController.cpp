@@ -11,9 +11,11 @@
 
 // constructor
 // serial : serial port for ICS communication
-IcsController::IcsController(HardwareSerial& serial)
+IcsController::IcsController(HardwareSerial& serial, int rxPin, int txPin)
 {
     this->serial = &serial;
+    this->rxPin = rxPin;
+    this->txPin = txPin;
     
     onError = NULL;
     servoFirst = NULL;
@@ -30,10 +32,7 @@ void IcsController::begin(int baud)
     T4 = 6*11*1000000 / baud + 400;
     
     // data 8bit, parity even, stop 1bit
-    serial->begin(baud, SERIAL_8E1);
-#ifdef GRROSE
-    serial->direction(HALFDUPLEX);
-#endif
+    serial->begin(baud, SERIAL_8E1, rxPin, txPin);
 }
 
 // call this in main loop (for Asynchronous API)
