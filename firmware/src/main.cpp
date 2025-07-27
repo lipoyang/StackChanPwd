@@ -60,6 +60,11 @@ void setup()
 
 	Serial.begin(115200);
 	Serial.println("StackChanPwd Start");
+//	M5.Lcd.begin();
+//	M5.Lcd.setTextSize(2);
+//	M5.Lcd.setTextColor(TFT_WHITE, TFT_BLACK);
+//	M5.Lcd.setCursor(0, 0);
+//	M5.Lcd.println("StackChanPwd Start");
 	delay(3000);
 
 	// ICSサーボの初期化
@@ -82,6 +87,12 @@ void setup()
 			char c = Serial.read();
 			if(c == 'b') break;
 		}
+		M5.update();
+		if(M5.BtnA.wasPressed()){
+			Serial.println("ButtonA.");
+			//M5.Lcd.println("ButtonA.");
+			break;
+		}
 		for(int i=0;i<SERVO_NUM;i++){
 			uint16_t pos = servos[i].getPosition();
 			Serial.print(pos);Serial.print(" ");
@@ -96,7 +107,7 @@ void setup()
 //	udpComm.begin();
 //	udpComm.onReceive = udpComm_callback;
 	
-#if 1
+#if 0
 	// シリアル通信で's'を受信するか
 	// ピン20がHIGHであれば動作開始
 	//pinMode(20, INPUT_PULLUP);
@@ -134,6 +145,7 @@ void loop()
 		motionCtrl.movButton(buttonFlag);
 		if(buttonFlag != buttonFlag_prev) {
     		Serial.printf("Button Flag: 0x%08X\n", buttonFlag);
+			//M5.Lcd.printf("Button Flag: 0x%08X\n", buttonFlag);
 		}
 		buttonFlag_prev = buttonFlag;
   	}
