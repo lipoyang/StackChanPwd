@@ -60,7 +60,7 @@ void setup()
 	head.begin();
 //  head.setMicroMotion(true);
   	head.setMicroMotion(false);
-	head.setExpression(Expression::Sleepy);
+//	head.setExpression(Expression::Sleepy);
 
 	Serial.begin(115200);
 	Serial.println("StackChanPwd Start");
@@ -114,6 +114,9 @@ void setup()
  	// ゲームパッドの初期化
 	gamepad = &gamepad_ps4;
 	gamepad->begin();
+
+	head.setBaseExpression(Expression::Sleepy);
+	head.setExpression(Expression::Sleepy);
 }
 
 // メインループ
@@ -128,6 +131,7 @@ void loop()
 		if (!gamepad_connected) {
 			Serial.println("GamePad connected.");
 			gamepad_connected = true;
+			head.setBaseExpression(Expression::Neutral);
 			head.setExpression(Expression::Happy, 2000);
 			head.setSpeachText("ゲームパッド接続", 2000);
 		}
@@ -143,9 +147,10 @@ void loop()
 		buttonFlag_prev = buttonFlag;
 
   	}else{
-		if (!gamepad_connected) {
-			Serial.println("GamePad not connected.");
-			gamepad_connected = true;
+		if (gamepad_connected) {
+			Serial.println("GamePad disconnected.");
+			gamepad_connected = false;
+			head.setBaseExpression(Expression::Sleepy);
 			head.setExpression(Expression::Neutral, 2000);
 			head.setSpeachText("ゲームパッド切断", 2000);
 		}
@@ -170,5 +175,21 @@ void loop()
 	}
 	
 	// スタックチャン
+	static const MotionData *motion_prev = M000::motion;
+	const MotionData *motion = motionCtrl.getPresentMotion();
+	if(motion != motion_prev) {
+		motion_prev = motion;
+		if((motion == M201::motion) || // パンチ左ストレート
+		   (motion == M202::motion) || // パンチ右ストレート
+		   (motion == M211::motion) || // A+←: パンチ左裏拳
+		   (motion == M212::motion) || // A+→: パンチ右裏拳
+		   (motion == M220::motion)    // A+↓: 防御
+		)
+		{
+			head.setExpression(Expression::Angry);
+		}else{
+			head.setExpression(Expression::Neutral);
+		}
+	}
 	head.loop();
 }

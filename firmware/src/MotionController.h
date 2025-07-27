@@ -134,6 +134,8 @@ public:
 	void clrButton(uint32_t buttonBit);
 	// ボタンフラグの値を格納する(ON/OFFする)
 	void movButton(uint32_t buttonBit);
+	// 現在のモーションデータを取得
+	const MotionData *getPresentMotion() const { return m_motion; }
 
 private:
 	// 各コマンド処理

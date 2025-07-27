@@ -77,7 +77,7 @@ void StackChanHead::loop()
     uint32_t now = millis();
 
     if (T_expression > 0 && (now - t0_expression) >= T_expression) {
-        avatar.setExpression(Expression::Neutral);
+        avatar.setExpression(baseExpression);
         T_expression = 0;
     }
 
