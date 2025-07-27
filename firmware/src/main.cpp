@@ -1,9 +1,11 @@
-#include <stdint.h>
-#include <Arduino.h>
-#include "./ICS.h"
-#include "./MotionController.h"
-#include "./Motion.h"
-#include "./common.h"
+#include <M5Unified.h>
+//#include <stdint.h>
+//#include <Arduino.h>
+#include "GamePad_PS4.h"
+#include "ICS.h"
+#include "MotionController.h"
+#include "Motion.h"
+#include "common.h"
 
 // シリアルポートのピン割り当て
 #define PIN_RXD1 27
@@ -46,9 +48,16 @@ const uint8_t HOME_STRETCH[SERVO_NUM]={
 // 送信バッファ
 static char txbuff[256];
 
+// ゲームパッド (PS4コントローラ)
+GamePad *gamepad;
+GamePad_PS4 gamepad_ps4;
+
 // 初期化
 void setup()
 {
+	auto cfg = M5.config();
+  	M5.begin(cfg);
+
 	Serial.begin(115200);
 	Serial.println("StackChanPwd Start");
 	delay(3000);
@@ -105,6 +114,10 @@ void setup()
 	// ホームポジションに移動
 	Serial.println("Stand Home position.");
 	motionCtrl.standHome();
+
+ 	// ゲームパッドの初期化
+	gamepad = &gamepad_ps4;
+	gamepad->begin();
 }
 
 // メインループ
@@ -114,6 +127,18 @@ void loop()
 	ics1.loop();
 	ics2.loop();
 	
+	// ゲームパッド
+  	if (gamepad->isConnected()) {
+		static uint32_t buttonFlag_prev = 0xFFFFFFFF;
+    	uint32_t buttonFlag = gamepad->getButton();
+		motionCtrl.movButton(buttonFlag);
+		if(buttonFlag != buttonFlag_prev) {
+    		Serial.printf("Button Flag: 0x%08X\n", buttonFlag);
+		}
+		buttonFlag_prev = buttonFlag;
+  	}
+
+	// 開発用 (シリアル通信でのボタン入力)
 	if(Serial.available() > 0){
 		char c = Serial.read();
 		if(c == '1') motionCtrl.setButton(BTN_L1);
