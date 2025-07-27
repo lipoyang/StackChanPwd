@@ -50,6 +50,8 @@ static char txbuff[256];
 void setup()
 {
 	Serial.begin(115200);
+	Serial.println("StackChanPwd Start");
+	delay(3000);
 
 	// ICSサーボの初期化
 	ics1.begin();
@@ -65,8 +67,12 @@ void setup()
 	motionCtrl.setHome(HOME_POS, HOME_STRETCH);
 	motionCtrl.begin(M000::motion);
 
-#if 0	// デバッグ用 (サーボの位置を確認)
+#if 1	// デバッグ用 (サーボの位置を確認)
 	while(1){
+		if(Serial.available() > 0){
+			char c = Serial.read();
+			if(c == 'b') break;
+		}
 		for(int i=0;i<SERVO_NUM;i++){
 			uint16_t pos = servos[i].getPosition();
 			Serial.print(pos);Serial.print(" ");
@@ -74,28 +80,30 @@ void setup()
 		Serial.println(" ");
 		delay(1000);
 	}
+	Serial.println("Servo position check finished.");
 #endif
 	// TODO
 	// UDP通信の設定
 //	udpComm.begin();
 //	udpComm.onReceive = udpComm_callback;
 	
-#if 0
+#if 1
 	// シリアル通信で's'を受信するか
 	// ピン20がHIGHであれば動作開始
-	pinMode(20, INPUT_PULLUP);
+	//pinMode(20, INPUT_PULLUP);
 	while(1)
 	{
 		if(Serial.available() > 0){
 			char c = Serial.read();
 			if(c == 's') break;
 		}
-		if(digitalRead(20) == HIGH){
-			break;
-		}
+		//if(digitalRead(20) == HIGH){
+		//	break;
+		//}
 	}
 #endif
 	// ホームポジションに移動
+	Serial.println("Stand Home position.");
 	motionCtrl.standHome();
 }
 
