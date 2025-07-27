@@ -1,6 +1,7 @@
 #include <M5Unified.h>
 //#include <stdint.h>
 //#include <Arduino.h>
+#include "StackChanHead.h"
 #include "GamePad_PS4.h"
 #include "ICS.h"
 #include "MotionController.h"
@@ -51,12 +52,23 @@ static char txbuff[256];
 // ゲームパッド (PS4コントローラ)
 GamePad *gamepad;
 GamePad_PS4 gamepad_ps4;
+bool gamepad_connected = false;
+
+// スタックチャン
+using namespace m5avatar;
+StackChanHead head;
 
 // 初期化
 void setup()
 {
 	auto cfg = M5.config();
   	M5.begin(cfg);
+
+  	// スタックチャンの初期化
+	head.begin();
+//  head.setMicroMotion(true);
+  	head.setMicroMotion(false);
+	head.setExpression(Expression::Sleepy);
 
 	Serial.begin(115200);
 	Serial.println("StackChanPwd Start");
@@ -140,15 +152,31 @@ void loop()
 	
 	// ゲームパッド
   	if (gamepad->isConnected()) {
+		if (!gamepad_connected) {
+			Serial.println("GamePad connected.");
+			gamepad_connected = true;
+			head.setExpression(Expression::Happy, 2000);
+			head.setSpeachText("ゲームパッド接続", 2000);
+		}
+		// ゲームパッドのボタン状態を取得
 		static uint32_t buttonFlag_prev = 0xFFFFFFFF;
     	uint32_t buttonFlag = gamepad->getButton();
+		// ボタンフラグをモーションコントローラにセット
 		motionCtrl.movButton(buttonFlag);
 		if(buttonFlag != buttonFlag_prev) {
     		Serial.printf("Button Flag: 0x%08X\n", buttonFlag);
 			//M5.Lcd.printf("Button Flag: 0x%08X\n", buttonFlag);
 		}
 		buttonFlag_prev = buttonFlag;
-  	}
+
+  	}else{
+		if (!gamepad_connected) {
+			Serial.println("GamePad not connected.");
+			gamepad_connected = true;
+			head.setExpression(Expression::Neutral, 2000);
+			head.setSpeachText("ゲームパッド切断", 2000);
+		}
+	}
 
 	// 開発用 (シリアル通信でのボタン入力)
 	if(Serial.available() > 0){
@@ -168,9 +196,8 @@ void loop()
 		if(c == ' ') motionCtrl.clrButton(BTN_ALL);
 	}
 	
-	// TODO
-	// UDP通信
-	//udpComm.loop();
+	// スタックチャン
+	head.loop();
 }
 
 #if 0 // TODO
