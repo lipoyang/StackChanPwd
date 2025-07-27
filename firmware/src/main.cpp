@@ -1,6 +1,4 @@
 #include <M5Unified.h>
-//#include <stdint.h>
-//#include <Arduino.h>
 #include "StackChanHead.h"
 #include "GamePad_PS4.h"
 #include "ICS.h"
@@ -39,12 +37,6 @@ const uint8_t HOME_STRETCH[SERVO_NUM]={
 //  肩P(右,左) 肩R         肘          腿R         腿P         膝           足首P       足首R
       20,   20,   20,   20,   65,   65,   65,   65,   65,   65,   65,   65,   65,   65,   65,   65
 };
-
-// TODO
-// UDP通信クラス
-//UdpComm udpComm;
-// UDP受信コールバック
-//void udpComm_callback(char* buff);
 
 // 送信バッファ
 static char txbuff[256];
@@ -114,26 +106,7 @@ void setup()
 	}
 	Serial.println("Servo position check finished.");
 #endif
-	// TODO
-	// UDP通信の設定
-//	udpComm.begin();
-//	udpComm.onReceive = udpComm_callback;
-	
-#if 0
-	// シリアル通信で's'を受信するか
-	// ピン20がHIGHであれば動作開始
-	//pinMode(20, INPUT_PULLUP);
-	while(1)
-	{
-		if(Serial.available() > 0){
-			char c = Serial.read();
-			if(c == 's') break;
-		}
-		//if(digitalRead(20) == HIGH){
-		//	break;
-		//}
-	}
-#endif
+
 	// ホームポジションに移動
 	Serial.println("Stand Home position.");
 	motionCtrl.standHome();
@@ -199,34 +172,3 @@ void loop()
 	// スタックチャン
 	head.loop();
 }
-
-#if 0 // TODO
-/**
- * 受信したコマンドの実行
- *
- * @param buff 受信したコマンドへのポインタ
- */
-void udpComm_callback(char* buff)
-{
-	uint16_t val;
-	int sval;
-	
-	Serial.print("udpComm_callback:");Serial.println(buff);
-	
-	switch(buff[0])
-	{
-	/* Dコマンド(デジタルボタン)
-	   書式: #Dxx$
-	   xx: 0のとき停止、正のとき前進、負のとき後退。
-	 */
-	case 'D':
-		// 値の解釈
-		if( HexToUint16(&buff[1], &val, 4) != 0 ) break;
-		Serial.print("D:");
-		Serial.println(val);
-		motionCtrl.movButton(val);
-		break;
-	}
-}
-#endif
-
