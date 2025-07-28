@@ -58,18 +58,11 @@ void setup()
 
   	// スタックチャンの初期化
 	head.begin();
-//  head.setMicroMotion(true);
   	head.setMicroMotion(false);
-//	head.setExpression(Expression::Sleepy);
 
 	Serial.begin(115200);
 	Serial.println("StackChanPwd Start");
-//	M5.Lcd.begin();
-//	M5.Lcd.setTextSize(2);
-//	M5.Lcd.setTextColor(TFT_WHITE, TFT_BLACK);
-//	M5.Lcd.setCursor(0, 0);
-//	M5.Lcd.println("StackChanPwd Start");
-	delay(3000);
+//	delay(3000);
 
 	// ICSサーボの初期化
 	ics1.begin();
@@ -115,6 +108,8 @@ void setup()
 	gamepad = &gamepad_ps4;
 	gamepad->begin();
 
+	// スタックチャンを居眠り状態に
+	head.setMicroMotion(true);
 	head.setBaseExpression(Expression::Sleepy);
 	head.setExpression(Expression::Sleepy);
 }
@@ -179,6 +174,8 @@ void loop()
 	const MotionData *motion = motionCtrl.getPresentMotion();
 	if(motion != motion_prev) {
 		motion_prev = motion;
+
+		// モーションに応じてスタックチャンの表情を変える
 		if((motion == M201::motion) || // パンチ左ストレート
 		   (motion == M202::motion) || // パンチ右ストレート
 		   (motion == M211::motion) || // A+←: パンチ左裏拳
@@ -187,8 +184,33 @@ void loop()
 		)
 		{
 			head.setExpression(Expression::Angry);
-		}else{
+			head.setMicroMotion(false);
+		}
+		else if(motion == M000::motion){
 			head.setExpression(Expression::Neutral);
+			head.setMicroMotion(true);
+		}
+		else{
+			head.setExpression(Expression::Neutral);
+			head.setMicroMotion(false);
+		}
+		// モーションに応じてスタックチャンの顔の向きを変える
+		if       (motion == M201::motion) {	// パンチ左ストレート
+			head.setGaze(-0.25f, 0.0f);
+		} else if(motion == M202::motion) {	// パンチ右ストレート
+			head.setGaze( 0.25f, 0.0f);
+		} else if(motion == M211::motion) { // A+←: パンチ左裏拳
+			head.setGaze(-0.5f, 0.0f);
+		} else if(motion == M212::motion) { // A+→: パンチ右裏拳
+			head.setGaze( 0.5f, 0.0f);
+		} else if(motion == M211::motion) { // A+←: パンチ左裏拳
+			head.setGaze(0.0f, 0.0f);
+		} else if(motion == M003::motion) { // ←: 歩行左
+			head.setGaze(-0.5f, 0.0f);
+		} else if(motion == M004::motion) { // →: 歩行右
+			head.setGaze(-0.5f, 0.0f);
+		} else{
+			head.setGaze(0.0f, 0.0f); // 中央
 		}
 	}
 	head.loop();
