@@ -109,7 +109,7 @@ void setup()
 	gamepad->begin();
 
 	// スタックチャンを居眠り状態に
-	head.setMicroMotion(true);
+	//head.setMicroMotion(true);
 	head.setBaseExpression(Expression::Sleepy);
 	head.setExpression(Expression::Sleepy);
 }
@@ -188,29 +188,29 @@ void loop()
 		}
 		else if(motion == M000::motion){
 			head.setExpression(Expression::Neutral);
-			head.setMicroMotion(true);
+			//head.setMicroMotion(true);
 		}
 		else{
 			head.setExpression(Expression::Neutral);
 			head.setMicroMotion(false);
 		}
 		// モーションに応じてスタックチャンの顔の向きを変える
-		if       (motion == M201::motion) {	// パンチ左ストレート
-			head.setGaze(-0.25f, 0.0f);
-		} else if(motion == M202::motion) {	// パンチ右ストレート
-			head.setGaze( 0.25f, 0.0f);
-		} else if(motion == M211::motion) { // A+←: パンチ左裏拳
-			head.setGaze(-0.5f, 0.0f);
-		} else if(motion == M212::motion) { // A+→: パンチ右裏拳
-			head.setGaze( 0.5f, 0.0f);
-		} else if(motion == M211::motion) { // A+←: パンチ左裏拳
-			head.setGaze(0.0f, 0.0f);
-		} else if(motion == M003::motion) { // ←: 歩行左
-			head.setGaze(-0.5f, 0.0f);
+		if       (motion == M003::motion) { // ←: 歩行左
+			head.setPosition( 50, 0);
 		} else if(motion == M004::motion) { // →: 歩行右
-			head.setGaze(-0.5f, 0.0f);
-		} else{
-			head.setGaze(0.0f, 0.0f); // 中央
+			head.setPosition(-50, 0);
+		} else if(motion == M201::motion) {	// パンチ左ストレート
+			head.setPosition( 25, 0);
+		} else if(motion == M202::motion) {	// パンチ右ストレート
+			head.setPosition(-25, 0);
+		} else if(motion == M211::motion) { // A+←: パンチ左裏拳
+			head.setPosition( 50, 0);
+		} else if(motion == M212::motion) { // A+→: パンチ右裏拳
+			head.setPosition(-50, 0);
+		} else if(motion == M220::motion) { // A+↓: 防御
+			head.setPosition(  0, -25);
+		} else {
+			head.setPosition(  0, 0);
 		}
 	}
 	head.loop();
