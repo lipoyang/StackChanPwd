@@ -117,8 +117,8 @@ void StackChanHead::clearSpeachText()
 void StackChanHead::setPosition(int x, int y)
 {
     isMicroMotion = false;
-    servos.setTargetPosition(SERVO_CH_X, x);
-    servos.setTargetPosition(SERVO_CH_Y, y);
+    servos.setPosition(SERVO_CH_X, x);
+    servos.setPosition(SERVO_CH_Y, y);
 }
 
 // スタックチャンの首サーボの不随意運動の有効/無効を設定

@@ -23,6 +23,8 @@ public:
     void setInitialPosition(int ch, int value);
     // set target position
     void setTargetPosition(int ch, int value);
+    // set position
+    void setPosition(int ch, int value);
     // control loop
     void control(int ch);
 

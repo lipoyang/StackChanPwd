@@ -27,6 +27,15 @@ void RcServo::setTargetPosition(int ch, int value)
     TargetPosition[ch] = value;
 }
 
+// set position
+void RcServo::setPosition(int ch, int value)
+{
+    // set target position
+    TargetPosition[ch] = value;
+    Position[ch] = value;
+    out(ch, value);
+}
+
 // control loop
 void RcServo::control(int ch)
 {
