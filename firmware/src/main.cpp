@@ -129,6 +129,7 @@ void loop()
 			head.setBaseExpression(Expression::Neutral);
 			head.setExpression(Expression::Happy, 2000);
 			head.setSpeachText("ゲームパッド接続", 2000);
+			head.setMicroMotion(true);
 		}
 		// ゲームパッドのボタン状態を取得
 		static uint32_t buttonFlag_prev = 0xFFFFFFFF;
@@ -148,6 +149,7 @@ void loop()
 			head.setBaseExpression(Expression::Sleepy);
 			head.setExpression(Expression::Neutral, 2000);
 			head.setSpeachText("ゲームパッド切断", 2000);
+			head.setMicroMotion(false);
 		}
 	}
 
@@ -181,18 +183,10 @@ void loop()
 		   (motion == M211::motion) || // A+←: パンチ左裏拳
 		   (motion == M212::motion) || // A+→: パンチ右裏拳
 		   (motion == M220::motion)    // A+↓: 防御
-		)
-		{
+		){
 			head.setExpression(Expression::Angry);
-			head.setMicroMotion(false);
-		}
-		else if(motion == M000::motion){
+		}else{
 			head.setExpression(Expression::Neutral);
-			//head.setMicroMotion(true);
-		}
-		else{
-			head.setExpression(Expression::Neutral);
-			head.setMicroMotion(false);
 		}
 		// モーションに応じてスタックチャンの顔の向きを変える
 		if       (motion == M003::motion) { // ←: 歩行左
@@ -211,6 +205,12 @@ void loop()
 			head.setPosition(  0, -25);
 		} else {
 			head.setPosition(  0, 0);
+		}
+		// モーションに応じてスタックチャンの不随意運動を有効/無効にする
+		if(motion == M000::motion){
+			head.setMicroMotion(true);
+		}else{
+			head.setMicroMotion(false);
 		}
 	}
 	head.loop();
