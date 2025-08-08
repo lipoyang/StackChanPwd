@@ -62,7 +62,12 @@ void setup()
 
 	Serial.begin(115200);
 	Serial.println("StackChanPwd Start");
-//	delay(3000);
+	
+	// MACアドレスの確認用
+  	uint8_t btmac[6];
+  	esp_read_mac(btmac, ESP_MAC_BT);
+  	Serial.printf("[Bluetooth] Mac Address = %02X:%02X:%02X:%02X:%02X:%02X\n", 
+    	btmac[0], btmac[1], btmac[2], btmac[3], btmac[4], btmac[5]);
 
 	// ICSサーボの初期化
 	ics1.begin();
