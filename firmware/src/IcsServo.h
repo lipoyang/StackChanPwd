@@ -8,7 +8,11 @@
 
 // buffer size
 #define ICS_TX_BUFF_SIZE  3
+#if 0
 #define ICS_RX_BUFF_SIZE  3
+#else
+#define ICS_RX_BUFF_SIZE  6 // optimize for M5Stack
+#endif
 
 // Error Code
 #define ERROR_TIMEOUT           0x01    // timeout
@@ -80,6 +84,10 @@ private:
     uint8_t rxData[ICS_RX_BUFF_SIZE]; // receive buffer
     int     rxCnt;                    // receive count
     bool    isReceiving;              // receiving flag
+
+    // optimize for M5Stack
+    uint8_t *rxPtr;           // pointer to receive data
+    int     rxSize;           // size of receive data
 };
 
 #endif

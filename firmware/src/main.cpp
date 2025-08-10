@@ -57,8 +57,8 @@ void setup()
   	M5.begin(cfg);
 
 	// デバッグ用
-//	pinMode(25, OUTPUT);
-//	pinMode(26, OUTPUT);
+	pinMode(25, OUTPUT);
+	pinMode(26, OUTPUT);
 
   	// スタックチャンの初期化
 	head.begin();
@@ -93,10 +93,12 @@ void setup()
 			char c = Serial.read();
 			if(c == 'b') break;
 		}
+		digitalWrite(25, HIGH);
 		for(int i=0;i<SERVO_NUM;i++){
 			uint16_t pos = servos[i].getPosition();
 			Serial.print(pos);Serial.print(" ");
 		}
+		digitalWrite(25, LOW);
 		Serial.println(" ");
 		delay(1000);
 	}

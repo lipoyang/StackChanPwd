@@ -389,6 +389,7 @@ bool IcsServo::writeID(uint8_t id)
 // pos : target position
 void IcsServo::requestPosition(uint16_t pos)
 {
+    digitalWrite(25, HIGH); // debug
     this->error = 0;
     this->posTarget = pos;
     this->request |= REQ_POSITION;
@@ -508,6 +509,10 @@ void IcsServo::sendAsync()
         txData[1] = (uint8_t)(pos >> 7) & 0x7F;   // POS_H
         txData[2] = (uint8_t)(pos & 0x7F);        // POS_L
         tx_size = 3;
+        // optimize for M5Stack
+        rxPtr = rxData;
+        rxSize = 3 + 3;
+        uart_set_rx_full_threshold(controller->uart_num, rxSize);
     }
     // Current
     else if(request & REQ_CURRENT){
@@ -517,6 +522,10 @@ void IcsServo::sendAsync()
         txData[0] = CMD_READ | (ID & ID_MASK); // CMD
         txData[1] = SC_STRETCH;  // SC
         tx_size = 2;
+        // optimize for M5Stack
+        rxPtr = rxData;
+        rxSize = 2 + 3;
+        uart_set_rx_full_threshold(controller->uart_num, rxSize);
     }
     // Temperature
     else if(request & REQ_TEMPERATURE){
@@ -526,19 +535,16 @@ void IcsServo::sendAsync()
         txData[0] = CMD_READ | (ID & ID_MASK); // CMD
         txData[1] = SC_TEMPERATURE;  // SC
         tx_size = 2;
+        // optimize for M5Stack
+        rxPtr = rxData;
+        rxSize = 2 + 3;
+        uart_set_rx_full_threshold(controller->uart_num, rxSize);
     }
     
     // send command
     if(tx_size != 0)
     {
         controller->write(txData, tx_size);
-#if 0
-        if(controller == &ics1){
-            Serial.print("s");
-        }else{
-            Serial.print("S");
-        }
-#endif
         this->isReceiving = true;
         rxCnt = 0;
         
@@ -563,6 +569,31 @@ void IcsServo::setError(uint8_t error)
 // asynchronous receive (POSITION command)
 void IcsServo::receivePositionAsync()
 {
+#if 1 // optimize for M5Stack
+    int len = uart_read_bytes(controller->uart_num, rxPtr, rxSize - rxCnt, 0);
+    if(len > 0){
+        rxPtr += len;
+        rxCnt += len;
+    }
+    if(rxCnt >= rxSize){
+        // [0-2] loopback
+        if(rxData[0] != txData[0] || rxData[1] != txData[1] || rxData[2] != txData[2]){
+            setError(ERROR_VERIFY); // Error
+            return;
+        }
+        // [3] CMD
+        if((rxData[3] & MSB_MASK) != (txData[0] & MSB_MASK)){
+            setError(ERROR_VERIFY); // Error
+            return;
+        }
+        // [4] position upper 7bit
+        // [5] position lower 7bit
+        position = ((uint16_t)rxData[4] << 7) | (uint16_t)rxData[5];
+        isReceiving = false;
+        uart_set_rx_full_threshold(controller->uart_num, 1); // optimize for M5Stack
+        return; // success
+    }
+#else
     // proccess each byte of received data
     int len = controller->getRxSize();
     int i;
@@ -605,13 +636,7 @@ void IcsServo::receivePositionAsync()
             // current position
             position = ((uint16_t)rxData[0] << 7) | (uint16_t)rxData[1];
             isReceiving = false;
-#if 0
-            if(controller == &ics1){
-                Serial.print("r");
-            }else{
-                Serial.print("R");
-            }
-#endif
+            uart_set_rx_full_threshold(controller->uart_num, 1); // optimize for M5Stack
             return; // success
         // abnormal state
         default:
@@ -619,11 +644,50 @@ void IcsServo::receivePositionAsync()
             return;
         }
     }
+#endif
 }
 
 // asynchronous receive (READ command)
 void IcsServo::receiveReadAsync()
 {
+#if 1 // optimize for M5Stack
+    int len = uart_read_bytes(controller->uart_num, rxPtr, rxSize - rxCnt, 0);
+    if(len > 0){
+        rxPtr += len;
+        rxCnt += len;
+    }
+    if(rxCnt >= rxSize){
+        // [0-1] loopback
+        if(rxData[0] != txData[0] || rxData[1] != txData[1]){
+            setError(ERROR_VERIFY); // Error
+            return;
+        }
+        // [2] CMD
+        if((rxData[2] & MSB_MASK) != (txData[0] & MSB_MASK)){
+            setError(ERROR_VERIFY); // Error
+            return;
+        }
+        // [3] SC
+        if(rxData[3] != txData[1]){
+            setError(ERROR_VERIFY); // Error
+            return;
+        }
+        // [4] DATA
+        switch(txData[1]){
+        // Current
+        case SC_CURRENT:
+            current = rxData[4];
+            break;
+        // Temperature
+        case SC_TEMPERATURE:
+            temperature = rxData[4];
+            break;
+        }
+        isReceiving = false;
+        uart_set_rx_full_threshold(controller->uart_num, 1); // optimize for M5Stack
+        return; // success
+    }
+#else
     // proccess each byte of received data
     int len = controller->getRxSize();
     int i;
@@ -677,6 +741,7 @@ void IcsServo::receiveReadAsync()
                 break;
             }
             isReceiving = false;
+            uart_set_rx_full_threshold(controller->uart_num, 1); // optimize for M5Stack
             return; // success
         // abnormal state
         default:
@@ -684,6 +749,7 @@ void IcsServo::receiveReadAsync()
             return;
         }
     }
+#endif
 }
 
 // asynchronous receive
@@ -707,13 +773,6 @@ void IcsServo::receiveAsync()
     }
     // check time limit
     if(controller->isTimeout()){
-#if 0
-        if(controller == &ics1){
-            Serial.print("e");
-        }else{
-            Serial.print("E");
-        }
-#endif
         setError(ERROR_TIMEOUT); // Error
     }
     delayMicroseconds(1);
