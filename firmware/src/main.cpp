@@ -56,10 +56,6 @@ void setup()
 	auto cfg = M5.config();
   	M5.begin(cfg);
 
-	// デバッグ用
-	pinMode(25, OUTPUT);
-	pinMode(26, OUTPUT);
-
   	// スタックチャンの初期化
 	head.begin();
   	head.setMicroMotion(false);
@@ -87,18 +83,16 @@ void setup()
 	motionCtrl.setHome(HOME_POS, HOME_STRETCH);
 	motionCtrl.begin(M000::motion);
 
-#if 1	// デバッグ用 (サーボの位置を確認)
+#if 0	// デバッグ用 (サーボの位置を確認)
 	while(1){
 		if(Serial.available() > 0){
 			char c = Serial.read();
-			if(c == 'b') break;
+			if(c == 's') break;
 		}
-		digitalWrite(25, HIGH);
 		for(int i=0;i<SERVO_NUM;i++){
 			uint16_t pos = servos[i].getPosition();
 			Serial.print(pos);Serial.print(" ");
 		}
-		digitalWrite(25, LOW);
 		Serial.println(" ");
 		delay(1000);
 	}

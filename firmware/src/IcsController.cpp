@@ -78,7 +78,6 @@ void IcsController::loop()
         else
         {
             servoNow = (servoNow != servoLast) ? servoNow->next : servoFirst;
-            if(servoNow == servoFirst) digitalWrite(25, LOW); // debug
         }
     }
 }

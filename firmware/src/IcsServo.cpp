@@ -389,7 +389,6 @@ bool IcsServo::writeID(uint8_t id)
 // pos : target position
 void IcsServo::requestPosition(uint16_t pos)
 {
-    digitalWrite(25, HIGH); // debug
     this->error = 0;
     this->posTarget = pos;
     this->request |= REQ_POSITION;
