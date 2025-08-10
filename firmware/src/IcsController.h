@@ -45,6 +45,9 @@ private:
     bool waiting;           // wait flag
     uint32_t T3;            // start time of wait
     uint32_t T4;            // time to wait
+
+    // optimize for M5Stack
+    int uart_num;           // UART number (1 or 2)
 };
 
 #endif

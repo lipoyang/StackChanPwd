@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "IcsController.h"
 #include "IcsServo.h"
+#include "driver/uart.h" // optimize for M5Stack
 
 /****************************************
  API
@@ -16,6 +17,9 @@ IcsController::IcsController(HardwareSerial& serial, int rxPin, int txPin)
     this->serial = &serial;
     this->rxPin = rxPin;
     this->txPin = txPin;
+
+    // optimize for M5Stack
+    this->uart_num = (&serial == &Serial1) ? UART_NUM_1 : UART_NUM_2;
     
     onError = NULL;
     servoFirst = NULL;

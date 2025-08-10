@@ -5,6 +5,7 @@
 #include <string.h>
 #include "IcsController.h"
 #include "IcsServo.h"
+#include "driver/uart.h" // optimize for M5Stack
 
 /****************************************
  Constants of ICS Protocol
@@ -179,7 +180,7 @@ uint16_t IcsServo::getPosition()
     
     // send command and receive response
     uint8_t rx_data[2+4]={0};
-    if(!this->transfer(tx_data, sizeof(tx_data), rx_data, sizeof(rx_data), 1)){
+    if(!this->transfer(tx_data, sizeof(tx_data), rx_data, sizeof(rx_data), 10)){
         return 0xFF;  // Error
     }
     
@@ -435,13 +436,29 @@ bool IcsServo::transfer(uint8_t* tx_data, int tx_size, uint8_t* rx_data, int rx_
     // set time limit
     controller->setTimeout(timeout);
     
+    // optimize for M5Stack
+    uart_set_rx_full_threshold(controller->uart_num, rx_size);
+
     // send command
     controller->write(tx_data, tx_size);
     
     // receive response
     bool retval = false;
     int rx_index = 0;
+    uint8_t* rx_ptr = rx_data; // optimize for M5Stack
+
     while(rx_index < rx_size){
+#if 1 // optimize for M5Stack
+        int len = uart_read_bytes(controller->uart_num, rx_ptr, rx_size - rx_index, 0);
+        if(len > 0){
+            rx_ptr += len;
+            rx_index += len;
+        }
+        if(rx_index >= rx_size){
+            retval = true;
+            break;
+        }
+#else
         int len = controller->getRxSize();
         int i;
         for(i=0;i<len;i++){
@@ -452,6 +469,7 @@ bool IcsServo::transfer(uint8_t* tx_data, int tx_size, uint8_t* rx_data, int rx_
                 break;
             }
         }
+#endif
         // check time limit
         if(controller->isTimeout()){
             setError(ERROR_TIMEOUT);
@@ -460,6 +478,9 @@ bool IcsServo::transfer(uint8_t* tx_data, int tx_size, uint8_t* rx_data, int rx_
         }
         delayMicroseconds(1);
     }
+	// optimize for M5Stack
+    uart_set_rx_full_threshold(controller->uart_num, 1);
+    
     return retval;
 }
 

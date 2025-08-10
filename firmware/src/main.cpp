@@ -56,6 +56,10 @@ void setup()
 	auto cfg = M5.config();
   	M5.begin(cfg);
 
+	// デバッグ用
+//	pinMode(25, OUTPUT);
+//	pinMode(26, OUTPUT);
+
   	// スタックチャンの初期化
 	head.begin();
   	head.setMicroMotion(false);
@@ -89,12 +93,6 @@ void setup()
 			char c = Serial.read();
 			if(c == 'b') break;
 		}
-		M5.update();
-		if(M5.BtnA.wasPressed()){
-			Serial.println("ButtonA.");
-			//M5.Lcd.println("ButtonA.");
-			break;
-		}
 		for(int i=0;i<SERVO_NUM;i++){
 			uint16_t pos = servos[i].getPosition();
 			Serial.print(pos);Serial.print(" ");
@@ -114,7 +112,6 @@ void setup()
 	gamepad->begin();
 
 	// スタックチャンを居眠り状態に
-	//head.setMicroMotion(true);
 	head.setBaseExpression(Expression::Sleepy);
 	head.setExpression(Expression::Sleepy);
 }
