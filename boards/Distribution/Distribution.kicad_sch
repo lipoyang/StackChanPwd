@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Stack-chan Powerd / Distribution Board")
-		(date "2025-06-23")
+		(date "2025-08-11")
 		(rev "1.0")
 	)
 	(lib_symbols
@@ -1538,9 +1538,9 @@
 		)
 		(uuid "24e0d574-fde2-4291-89d9-ac5d434c8d1e")
 	)
-	(text "1340 ohm -> 5V"
+	(text "1242 ohm -> 5.35V"
 		(exclude_from_sim no)
-		(at 158.75 109.22 0)
+		(at 158.75 112.776 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1557,6 +1557,16 @@
 			)
 		)
 		(uuid "34d17693-bd87-49db-adaa-fb2808a262bd")
+	)
+	(text "+0.35V is for Vf of Schottky Diode"
+		(exclude_from_sim no)
+		(at 165.1 116.586 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "6ca0d33c-be67-4177-849c-3d697e4172ff")
 	)
 	(text "(JST ZH Top Type)"
 		(exclude_from_sim no)
@@ -1580,7 +1590,7 @@
 	)
 	(text "Class F (Tolerance 1%)"
 		(exclude_from_sim no)
-		(at 159.766 113.284 0)
+		(at 160.02 109.22 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2868,7 +2878,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "330"
+		(property "Value" "220"
 			(at 157.48 87.6299 0)
 			(effects
 				(font
@@ -3408,7 +3418,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10"
+		(property "Value" "22"
 			(at 157.48 95.2499 0)
 			(effects
 				(font
